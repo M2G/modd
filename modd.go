@@ -8,9 +8,9 @@ import (
 	"time"
 
 	"github.com/M2G/moddwatch"
-	"github.com/cortesi/modd/conf"
-	"github.com/cortesi/modd/notify"
-	"github.com/cortesi/modd/shell"
+	"github.com/M2G/modd/conf"
+	"github.com/M2G/modd/notify"
+	"github.com/M2G/modd/shell"
 	"github.com/cortesi/termlog"
 )
 

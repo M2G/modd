@@ -7,10 +7,10 @@ import (
 	"path/filepath"
 	"time"
 
+	"github.com/M2G/moddwatch"
 	"github.com/cortesi/modd/conf"
 	"github.com/cortesi/modd/notify"
 	"github.com/cortesi/modd/shell"
-	"github.com/cortesi/moddwatch"
 	"github.com/cortesi/termlog"
 )
 

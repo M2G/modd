@@ -3,7 +3,7 @@ module github.com/M2G/modd
 go 1.26.2
 
 require (
-	github.com/M2G/moddwatch v0.1.3
+	github.com/M2G/moddwatch v0.1.4
 	github.com/cortesi/termlog v0.0.0-20250523085554-f86697764bb0
 	github.com/google/go-cmp v0.7.0
 	gopkg.in/alecthomas/kingpin.v2 v2.2.6

@@ -53,7 +53,7 @@ func (d *daemon) Run() {
 			if _, ok := pstate.Error.(*exec.ExitError); ok {
 				d.log.Warn("exited: %s", pstate.ProcState)
 			} else {
-				d.log.Shout("exited: %s", err)
+				d.log.Shout("exited: %s", pstate.Error)
 			}
 		} else {
 			d.log.Warn("exited: %s", pstate.ProcState)

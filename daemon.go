@@ -80,6 +80,7 @@ func (d *daemon) Restart() {
 		ex, err := shell.NewExecutor(d.shell, d.conf.Command, d.indir)
 		if err != nil {
 			d.log.Shout("Could not create executor: %s", err)
+			return
 		}
 		d.ex = ex
 		go d.Run()

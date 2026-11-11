@@ -8,6 +8,8 @@ import (
 	"os"
 	"os/exec"
 	"sync"
+	"syscall"
+	"time"
 
 	"github.com/cortesi/termlog"
 )
@@ -156,7 +158,22 @@ func (e *Executor) Signal(sig os.Signal) error {
 	return e.sendSignal(sig)
 }
 
+// stopGrace is how long Stop waits after SIGTERM before sending SIGKILL.
+const stopGrace = 3 * time.Second
+
+// Stop asks the process to terminate, and kills it if it is still running
+// after stopGrace.
 func (e *Executor) Stop() error {
+	if err := e.Signal(syscall.SIGTERM); err != nil {
+		return err
+	}
+	deadline := time.Now().Add(stopGrace)
+	for time.Now().Before(deadline) {
+		if !e.Running() {
+			return nil
+		}
+		time.Sleep(25 * time.Millisecond)
+	}
 	return e.Signal(os.Kill)
 }
 

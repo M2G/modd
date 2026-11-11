@@ -61,6 +61,7 @@ func main() {
 		parser := syntax.NewParser()
 		prog, err := parser.Parse(strings.NewReader(*exec), "")
 		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 
@@ -78,7 +79,11 @@ func main() {
 		defer cancel()
 		runner.Reset()
 		err = runner.Run(ctx, prog)
+		if status, ok := interp.IsExitStatus(err); ok {
+			os.Exit(int(status))
+		}
 		if err != nil {
+			fmt.Fprintln(os.Stderr, err)
 			os.Exit(1)
 		}
 		os.Exit(0)

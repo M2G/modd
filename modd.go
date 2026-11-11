@@ -108,28 +108,6 @@ func (mr *ModRunner) PrepOnly(initial bool) error {
 }
 
 func (mr *ModRunner) runBlock(b conf.Block, mod *moddwatch.Mod, dpen *DaemonPen) {
-	if b.InDir != "" {
-		currentDir, err := os.Getwd()
-		if err != nil {
-			mr.Log.Shout("Error getting current working directory: %s", err)
-			return
-		}
-		err = os.Chdir(b.InDir)
-		if err != nil {
-			mr.Log.Shout(
-				"Error changing to indir directory \"%s\": %s",
-				b.InDir,
-				err,
-			)
-			return
-		}
-		defer func() {
-			err := os.Chdir(currentDir)
-			if err != nil {
-				mr.Log.Shout("Error returning to original directory: %s", err)
-			}
-		}()
-	}
 	err := RunPreps(
 		b,
 		mr.Config.GetVariables(),

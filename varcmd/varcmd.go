@@ -6,8 +6,8 @@ import (
 	"regexp"
 	"strings"
 
-	"github.com/M2G/moddwatch"
 	"github.com/M2G/modd/conf"
+	"github.com/M2G/moddwatch"
 )
 
 var name = regexp.MustCompile(`(\\*)@\w+`)
@@ -73,8 +73,12 @@ func (v *VarCmd) get(name string) (string, error) {
 	if (name == "@mods" || name == "@dirmods") && v.Block != nil {
 		var modified []string
 		if v.Modified == nil {
+			dir := "."
+			if v.Block.InDir != "" {
+				dir = v.Block.InDir
+			}
 			var err error
-			modified, err = moddwatch.List(".", v.Block.Include, v.Block.Exclude)
+			modified, err = moddwatch.List(dir, v.Block.Include, v.Block.Exclude)
 			if err != nil {
 				return "", err
 			}

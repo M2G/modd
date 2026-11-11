@@ -43,6 +43,9 @@ func (d *daemon) Run() {
 		}
 		if !lastStart.IsZero() {
 			time.Sleep(delay)
+			if d.stop.Load() {
+				return
+			}
 		}
 		d.log.Notice(">> starting...")
 		lastStart = time.Now()

@@ -5,12 +5,13 @@ import (
 	"os"
 	"os/signal"
 	"path/filepath"
+	"syscall"
 	"time"
 
-	"github.com/M2G/moddwatch"
 	"github.com/M2G/modd/conf"
 	"github.com/M2G/modd/notify"
 	"github.com/M2G/modd/shell"
+	"github.com/M2G/moddwatch"
 	"github.com/cortesi/termlog"
 )
 
@@ -172,8 +173,8 @@ func (mr *ModRunner) runOnChan(modchan chan *moddwatch.Mod, readyCallback func()
 	defer dworld.Shutdown(os.Kill)
 
 	c := make(chan os.Signal, 1)
-	signal.Notify(c, os.Interrupt, os.Kill)
-	defer signal.Reset(os.Interrupt, os.Kill)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	defer signal.Reset(os.Interrupt, syscall.SIGTERM)
 	go func() {
 		dworld.Shutdown(<-c)
 		os.Exit(0)

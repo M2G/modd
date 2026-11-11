@@ -4,6 +4,7 @@ import (
 	"os"
 	"os/exec"
 	"sync"
+	"sync/atomic"
 	"time"
 
 	"github.com/M2G/modd/conf"
@@ -29,14 +30,14 @@ type daemon struct {
 	ex    *shell.Executor
 	log   termlog.Stream
 	shell string
-	stop  bool
+	stop  atomic.Bool
 	sync.Mutex
 }
 
 func (d *daemon) Run() {
 	var lastStart time.Time
 	delay := MinRestart
-	for d.stop != true {
+	for !d.stop.Load() {
 		if delay > MinRestart {
 			d.log.Notice(">> restart backoff... %dms", delay/time.Millisecond)
 		}
@@ -97,7 +98,7 @@ func (d *daemon) Restart() {
 
 func (d *daemon) Shutdown(sig os.Signal) error {
 	d.log.Notice(">> stopping")
-	d.stop = true
+	d.stop.Store(true)
 	if d.ex != nil {
 		return d.ex.Stop()
 	}

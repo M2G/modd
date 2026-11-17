@@ -14,9 +14,7 @@ quick idea of what modd can do:
 
 Example                                      | Description
 -------------------------------------------- | -------
-[frontend.conf](./examples/frontend.conf)    | A front-end project with React + Browserify + Babel. Modd and devd replace many functions of Gulp/Grunt.
 [go.conf](./examples/go.conf)                | Live unit tests for Go.
-[python.conf](./examples/python.conf)        | Python + Redis, with devd managing livereload.
 
 
 
